@@ -1,0 +1,66 @@
+@model User
+@{
+    Layout = "~/Views/Shared/Denemelayout.cshtml";
+}
+<section class="page-section" id="register">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Oturum Aç</h2>
+                <hr class="divider" />
+                <p class="text-muted mb-5">--</p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form id="contactForm" method="post">
+                    <!-- Name input-->
+                    
+                    <!-- Email address input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="Email" type="email" placeholder="name@example.com" name="Email" data-sb-validations="required,email" />
+                        <label for="Email">Email </label>
+                        <div class="invalid-feedback" data-sb-feedback="Email:required">An email is required.</div>
+                        <div class="invalid-feedback" data-sb-feedback="Email:email">Email is not valid.</div>
+                    </div>
+                    <!-- Phone number input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="Password" type="tel" placeholder="(123) 456-7890" name="Password" data-sb-validations="required" />
+                        <label for="Password">Şifre</label>
+                        <div class="invalid-feedback" data-sb-feedback="Password:required">A phone number is required.</div>
+                        
+                    </div>
+                    
+                    <!-- Message input-->
+                    <!-- Submit success message-->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center mb-3">
+                            <div class="fw-bolder">Form submission successful!</div>
+                            To activate this form, sign up at
+                            <br />
+                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                        </div>
+                    </div>
+                    <!-- Submit error message-->
+                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                    <!-- Submit Button-->
+                    <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Giriş</button></div>
+
+                    
+                    
+                    
+                </form>
+                
+            </div>
+            
+        </div>
+        
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-4 text-center mb-5 mb-lg-0">
+               
+                <a href="@Url.Action("Register", "Home")" class="btn btn-primary btn-xl">Hesabınız yoksa</a>
+            </div>
+        </div>
+    </div>
+</section>

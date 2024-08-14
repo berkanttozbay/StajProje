@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            
+        .contact-map-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .contact-map-row .col-lg-6 {
+        flex: 1;
+    }
+}
+        </style>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Creative - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="~/webArayuz/assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="~/webArayuz/css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+
+        @RenderBody()
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top">WWA Otel</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+
+                        
+                        <li class="nav-item"><a class="nav-link" href="#about">Hakkımızda</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">Hizmetlerimiz</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#iletişim">İletişim</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Rezervasyon", "Home")">Rezervasyon Yap</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Home")">Oturum Aç</a></li>
+                        @if (Context.Session.GetString("UserId") != null)
+                        {
+                        <li class="nav-item">
+                             <a class="nav-link" href="#">@Context.Session.GetString("UserEmail")</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Logout">Çıkış</a>
+                        </li>
+                        }   
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">WWA Otel </h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">Oteli incele !</p>
+                        <a class="btn btn-primary btn-xl" href="#about">Hakkımızda</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Aradığınız her şey bu otelde</h2>
+                        <hr class="divider divider-light" />
+                        <p class="text-white-75 mb-4">En uygun ve en kaliteli hizmet alarak kendinizi evinizde hissedebilmeniz için bizi tercih edin!</p>
+                        <a class="btn btn-light btn-xl" href="#services">Hizmetlerimiz!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services-->
+        <section class="page-section" id="services">
+            <div class="container px-4 px-lg-5">
+                <h2 class="text-center mt-0">Hizmetlerimiz</h2>
+                <hr class="divider" />
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-gem fs-1 text-primary" ></i></div>
+                            <h3 class="h4 mb-2" >Spor Salonu</h3>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-laptop fs-1 text-primary" ></i></div>
+                            <h3 class="h4 mb-2">Kapalı Havuz</h3>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Organizasyon</h3>
+                           
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Konaklama</h3>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio-->
+        <div id="portfolio">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="https://i.pinimg.com/originals/c9/6e/fe/c96efeb1223bc3ed5c6e97481e1d5b3f.jpg" title="Project Name">
+                            <img class="img-fluid" src="https://i.pinimg.com/originals/c9/6e/fe/c96efeb1223bc3ed5c6e97481e1d5b3f.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                
+                                <div class="project-name">Spor Salonu</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="https://360travel.by/images/gallery/hotels/2211/231323908.jpg" title="Spor Salonu">
+                            <img class="img-fluid" src="https://360travel.by/images/gallery/hotels/2211/231323908.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                
+                                <div class="project-name">Havuz</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="https://avatars.mds.yandex.net/i?id=43b460dcc163273efc3d59b231f7f0e778a51dae-6228727-images-thumbs&n=13" title="Project Name">
+                            <img class="img-fluid" src="https://avatars.mds.yandex.net/i?id=43b460dcc163273efc3d59b231f7f0e778a51dae-6228727-images-thumbs&n=13" alt="..." />
+                            <div class="portfolio-box-caption">
+                                
+                                <div class="project-name">Organizasyon</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="http://www.gimatotel.com/images/rooms/slider/1.jpg" title="Project Name">
+                            <img class="img-fluid" src="http://www.gimatotel.com/images/rooms/slider/1.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                
+                                <div class="project-name">Tek kişilik oda </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="http://www.gimatotel.com/images/rooms/slider/2.jpg" title="Project Name">
+                            <img class="img-fluid" src="http://www.gimatotel.com/images/rooms/slider/2.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                
+                                <div class="project-name">Çift kişilik oda</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="http://www.gimatotel.com/images/rooms/slider/3.jpg" title="Project Name">
+                            <img class="img-fluid" src="http://www.gimatotel.com/images/rooms/slider/3.jpg" alt="..." />
+                            <div class="portfolio-box-caption p-3">
+                                
+                                <div class="project-name">Üç kişilik oda</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Call to action-->
+        
+        <!-- Contact-->
+        <section class="page-section" id="iletişim">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center">
+                        <h2 class="mt-0">İletişim</h2>
+                        <hr class="divider" />
+                        <p class="text-muted mb-5">Bize mesaj bırakabilirsiniz !</p>
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <div class="col-lg-6">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+                        
+                        <div class="container">
+    <div class="row gx-4 gx-lg-5 justify-content-center contact-map-row">
+    <div class="col-lg-6">
+            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                <!-- Name input-->
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                    <label for="name">İsim</label>
+                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                </div>
+                <!-- Email address input-->
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                    <label for="email">Email </label>
+                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                </div>
+                <!-- Phone number input-->
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                    <label for="phone">Telefon</label>
+                    <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                </div>
+                <!-- Message input-->
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                    <label for="message">Mesaj</label>
+                    <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                </div>
+                <!-- Submit Button-->
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Gönder</button>
+                </div>
+            </form>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                        <i class="bi-phone fs-2 mb-3 text-muted"></i>
+                        
+                        <div>+1 (555) 123-4567</div>
+                    </div>
+                </div>
+        <!-- Map -->
+        <div class="col-lg-6">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.510417108442!2d37.278213573628896!3d41.123382251216846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4062bbfb8ad66ec5%3A0xc8f9716fa881eb78!2zw5xueWUgWWF6xLFsxLFtIHZlIEVsZWt0cm9uaWs!5e0!3m2!1str!2str!4v1723244306686!5m2!1str!2str" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
+
+            
+            
+
+            
+        </section>
+        <!-- Footer-->
+        <footer class="bg-dark py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2024 - WWA Otel</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="~/webArayuz/js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        
+        
+    </body>
+</html>

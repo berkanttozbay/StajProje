@@ -1,0 +1,166 @@
+@model Room
+
+@{
+    ViewData["Title"] = "Odalar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Topbar Buttons -->
+        <div class="top-buttons">
+            <button class="btn btn-primary button" onclick="loadContent('odaekle', this)">Oda Ekle</button>
+            <button class="btn btn-secondary button" onclick="loadContent('odaguncelle', this)">Oda Güncelle</button>
+            <button class="btn btn-success button" onclick="loadContent('odalistele', this)">Oda Listele</button>
+        </div>
+
+        <!-- Main Content -->
+        <div id="dynamic-content">
+            <!-- İçerik buraya yüklenecek -->
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadContent(page, button) {
+        let content = '';
+        
+        // Seçili butonun stilini ayarla
+        document.querySelectorAll('.button').forEach(btn => {
+            btn.classList.remove('selected-button');
+        });
+        button.classList.add('selected-button');
+        
+        if (page === 'odaekle') {
+            content = `
+            
+            <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            
+                <div class="col-lg-6">
+                    <form id="contactForm" method="post" action="@Url.Action("Odalar", "Admin")">
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <label for="Capacity">Capacity</label>
+                            <input class="form-control" id="Capacity" type="text"  name="Capacity" data-sb-validations="required" />
+                            
+                            <div class="invalid-feedback" data-sb-feedback="FullName:required">A name is required.</div>
+                        </div>
+                        <!-- Phone input -->
+                        <div class="form-floating mb-3">
+                            <label for="mKare">mKare</label>
+                            <input class="form-control" id="mKare" name="mKare" type="tel"  data-sb-validations="required" />
+                            
+                            <div class="invalid-feedback" data-sb-feedback="Phone:required">mKare</div>
+                        </div>
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <label for="PricePerNight">PricePerNight</label>
+                            <input class="form-control" id="PricePerNight" type="text" placeholder="" name="PricePerNight" data-sb-validations="required" />
+                            
+                            
+                        </div>
+                        
+                        
+                        <!-- Submit Button-->
+                        <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Ekle</button></div>
+                    </form>
+                </div>
+            </div>`;
+        }  else if (page === 'odaguncelle') {
+            content = `
+                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <div class="col-lg-6">
+                        <form id="updateForm" method="post" action="@Url.Action("Guncelle", "Admin")">
+                            <input type="hidden" id="RoomId" name="RoomId" value="" />
+
+                            <div class="form-floating mb-3">
+                                <label for="Capacity">Capacity</label>
+                                <input class="form-control" id="Capacity" name="Capacity" type="text" placeholder="Enter capacity" />
+                                
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <label for="mKare">mKare</label>
+                                <input class="form-control" id="mKare" name="mKare" type="text" placeholder="m^2" />
+                                
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <label for="PricePerNight">PricePerNight</label>
+                                <input class="form-control" id="PricePerNight" name="PricePerNight" type="number" placeholder="$" />
+                                
+                            </div>
+
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Güncelle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>`;
+
+            
+            const roomId = prompt('Güncellemek istediğiniz odanın ID\'sini girin:');
+            if (roomId) {
+                fetch(`/Admin/GetRoomDetails/${roomId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            document.querySelector('#updateForm #RoomId').value = data.roomId;
+                            document.querySelector('#updateForm #Capacity').value = data.capacity;
+                            document.querySelector('#updateForm #mKare').value = data.mKare;
+                            document.querySelector('#updateForm #PricePerNight').value = data.pricePerNight;
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        } else if (page === 'odalistele') {
+        fetch('@Url.Action("OdalarListele", "Admin")')
+            .then(response => response.json())
+            .then(data => {
+                content = `
+                    <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                        <div class="col-lg-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Oda ID</th>
+                                        <th>Kapasite</th>
+                                        <th>m²</th>
+                                        <th>Gece Başına Ücret</th>
+                                        <th>Durum</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data.map(oda => `
+                                        <tr>
+                                            <td>${oda.roomId}</td>
+                                            <td>${oda.capacity}</td>
+                                            <td>${oda.mKare}</td>
+                                            <td>${oda.pricePerNight}</td>
+                                            <td>${oda.isAvailable ? "Mevcut" : "Dolu"}</td>
+                                            <td>
+                                                <button onclick="loadContent('odaguncelle',this, ${oda.roomId})" class="btn btn-warning btn-sm">Güncelle</button>
+                                                <button onclick="deleteRoom(${oda.roomId})" class="btn btn-danger btn-sm">Sil</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>`;
+                document.getElementById('dynamic-content').innerHTML = content;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('dynamic-content').innerHTML = '<p>Bir hata oluştu. Lütfen tekrar deneyin.</p>';
+            });
+            
+    }
+    
+        document.getElementById('dynamic-content').innerHTML = content;
+    }
+</script>

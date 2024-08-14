@@ -1,0 +1,46 @@
+@model PaymentViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme Sayfası</title>
+    <style>
+        #payment-button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+        <div id="payment-container">
+            @Html.Raw(Model.HtmlContent)
+
+        @* @if(Model.HtmlContent == null)
+        {
+        <p> gecersiz </p>
+        } *@
+    </div>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            var htmlContent = '@Html.Raw(Model.HtmlContent)';
+
+            if (!htmlContent || htmlContent.trim() === "") {
+                // İçerik boşsa kullanıcıya uyarı mesajı göster
+                alert("Ödeme formu geçersiz . Lütfen tekrar deneyin.");
+                // Sayfayı yönlendirmek veya bir hata mesajı göstermek isterseniz buraya ekleyebilirsiniz
+                 window.location.href = "DenemeCard"; // Örneğin, bir hata sayfasına yönlendirme
+            } else {
+                document.getElementById('start-payment-button').addEventListener('click', function () {
+                    var form = document.getElementById('iyzico-3ds-form');
+                    if (form) {
+                        form.submit();
+                    } else {
+                        console.error('3D Secure formu bulunamadı.');
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+</html>

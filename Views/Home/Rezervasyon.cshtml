@@ -1,0 +1,73 @@
+
+@{
+    ViewData["Title"] = "Rezervasyon Sayfası";
+    Layout = "~/Views/Shared/Rezervasyonlayout.cshtml";
+}
+
+
+
+<section id="reservation" class="py-5">
+    <div class="container px-4 px-lg-5">
+        <h2 class="fw-bolder text-center mb-4"> - Rezervasyon -</h2>
+        
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        
+        <form asp-action="Rezervasyon" method="post" class="row g-3" enctype="multipart/form-data">
+            <!-- Guest bilgileri -->
+            <div class="col-md-6">
+                <label for="MisafirAd" class="form-label">Ad</label>
+                <input type="text" class="form-control" id="MisafirAd" name="MisafirAd" required>
+            </div>
+            <div class="col-md-6">
+                <label for="MisafirSoyad" class="form-label">Soyad</label>
+                <input type="text" class="form-control" id="MisafirSoyad" name="MisafirSoyad" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Phone" class="form-label">Telefon</label>
+                <input type="tel" class="form-control" id="Phone" name="Phone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Yetiskin" class="form-label">Yetişkin sayısı</label>
+                <input type="number" class="form-control" id="Yetiskin" name="Yetiskin" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Cocuk" class="form-label">Çocuk sayısı</label>
+                <input type="number" class="form-control" id="Cocuk" name="Cocuk" required>
+            </div>
+            
+            <!-- Reservation bilgileri -->
+            <div class="col-md-6">
+                <label for="CheckInDate" class="form-label">Giriş Tarihi</label>
+                <input type="date" class="form-control" id="CheckInDate" name="CheckInDate" required>
+            </div>
+            <div class="col-md-6">
+                <label for="CheckOutDate" class="form-label">Çıkış Tarihi</label>
+                <input type="date" class="form-control" id="CheckOutDate" name="CheckOutDate" required>
+            </div>
+            <div class="col-md-6">
+                <label for="RoomId" class="form-label">Oda Tipi</label>
+                <select class="form-select" id="RoomId" name="RoomId" required>
+                    <option selected disabled value="">Seçiniz...</option>
+                    <option value="1">Tek kişilik Oda</option>
+                    <option value="2">Çift kişilik Oda</option>
+                    <option value="3">Üç kişilik Oda</option>
+                    <option value="4">Suit</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="Aciklama" class="form-label">Açıklama</label>
+                <input type="text" class="form-control" id="Aciklama" name="Aciklama" required>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Rezervasyon Yap</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+

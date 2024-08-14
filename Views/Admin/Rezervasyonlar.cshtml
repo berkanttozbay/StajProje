@@ -1,0 +1,263 @@
+@model User
+@{
+    ViewData["Title"] = "Admin Panel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                <!-- Topbar Buttons -->
+                <div class="top-buttons">
+                <button class="btn btn-primary button" onclick="loadContent('rezervasyonekle', this)">Rezervasyon Ekle</button>
+                <button class="btn btn-secondary button" onclick="loadContent('rezervasyonguncelle', this)">Rezervasyon Güncelle</button>
+                <button class="btn btn-success button" onclick="loadContent('rezervasyonlistele', this)">Rezervasyonları Listele</button>
+                </div>
+
+                <div id="dynamic-content">
+            <!-- İçerik buraya yüklenecek -->
+                </div>
+                
+
+            </div>
+        </div>
+
+<script>
+    
+    function deleteRezervasyon(id) {
+    if (confirm('Bu rezervasyonu silmek istediğinizden emin misiniz?')) {
+        fetch(`/Admin/DeleteRezervasyon/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Rezervasyon başarıyla silindi.');
+                // Listeyi yeniden yükle
+                loadContent('rezervasyonlistele', document.querySelector('.btn-primary'));
+            } else {
+                return response.json().then(data => {
+                    alert(`Hata: ${data.error}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('Bir hata oluştu.');
+        });
+    }
+}
+    function loadContent(page, button) {
+        let content = '';
+        
+        // Seçili butonun stilini ayarla
+        document.querySelectorAll('.button').forEach(btn => {
+            btn.classList.remove('selected-button');
+        });
+        button.classList.add('selected-button');
+        
+        if (page === 'rezervasyonekle') {
+            content = `
+            
+            <div class="container px-4 px-lg-5">
+        <h2 class="fw-bolder text-center mb-4"> - Rezervasyon -</h2>
+        <form id="contactForm" method="post" action="@Url.Action("Rezervasyonlar", "Admin")" class="row g-3" ">
+            <!-- Guest bilgileri -->
+            
+
+            <div class="col-md-6">
+                <label for="MisafirAd" class="form-label">Ad</label>
+                <input type="text" class="form-control" id="MisafirAd" name="MisafirAd"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="MisafirSoyad" class="form-label">Soyad</label>
+                <input type="text" class="form-control" id="MisafirSoyad" name="MisafirSoyad"  required>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="Phone" class="form-label">Telefon</label>
+                <input type="tel" class="form-control" id="Phone" name="Phone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Yetiskin" class="form-label">Yetişkin sayısı</label>
+                <input type="number" class="form-control" id="Yetiskin" name="Yetiskin"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="Cocuk" class="form-label">Çocuk sayısı</label>
+                <input type="number" class="form-control" id="Cocuk" name="Cocuk"  required>
+            </div>
+            
+            <!-- Reservation bilgileri -->
+            <div class="col-md-6">
+                <label for="CheckInDate" class="form-label">Giriş Tarihi</label>
+                <input type="date" class="form-control" id="CheckInDate" name="CheckInDate"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="CheckOutDate" class="form-label">Çıkış Tarihi</label>
+                <input type="date" class="form-control" id="CheckOutDate" name="CheckOutDate"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="RoomId" class="form-label">Oda Tipi</label>
+                <select class="form-select" id="RoomId" name="RoomId" required>
+                    <option selected disabled value="">Seçiniz...</option>
+                    <option value="1">Tek kişilik Oda</option>
+                    <option value="2">Çift kişilik Oda</option>
+                    <option value="3">Üç kişilik Oda</option>
+                    <option value="4">Suit</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="Aciklama" class="form-label">Açıklama</label>
+                <input type="text" class="form-control" id="Aciklama" name="Aciklama"  required>
+            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Rezervasyon Yap</button>
+            </div>
+            
+        </form>
+    </div>
+            `;
+        }  else if (page === 'rezervasyonguncelle') {
+            content = `
+               <div class="container px-4 px-lg-5">
+        <h2 class="fw-bolder text-center mb-4"> - Rezervasyon -</h2>
+        <form id="updateForm" method="post" action="@Url.Action("RezGuncelle", "Admin")" class="row g-3" ">
+            <!-- Guest bilgileri -->
+            
+
+            <div class="col-md-6">
+                <label for="MisafirAd" class="form-label">Ad</label>
+                <input type="text" class="form-control" id="MisafirAd" name="MisafirAd"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="MisafirSoyad" class="form-label">Soyad</label>
+                <input type="text" class="form-control" id="MisafirSoyad" name="MisafirSoyad"  required>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="Phone" class="form-label">Telefon</label>
+                <input type="tel" class="form-control" id="Phone" name="Phone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="Yetiskin" class="form-label">Yetişkin sayısı</label>
+                <input type="number" class="form-control" id="Yetiskin" name="Yetiskin"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="Cocuk" class="form-label">Çocuk sayısı</label>
+                <input type="number" class="form-control" id="Cocuk" name="Cocuk"  required>
+            </div>
+            
+            <!-- Reservation bilgileri -->
+            <div class="col-md-6">
+                <label for="CheckInDate" class="form-label">Giriş Tarihi</label>
+                <input type="date" class="form-control" id="CheckInDate" name="CheckInDate"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="CheckOutDate" class="form-label">Çıkış Tarihi</label>
+                <input type="date" class="form-control" id="CheckOutDate" name="CheckOutDate"  required>
+            </div>
+            <div class="col-md-6">
+                <label for="RoomId" class="form-label">Oda Tipi</label>
+                <select class="form-select" id="RoomId" name="RoomId" required>
+                    <option selected disabled value="">Seçiniz...</option>
+                    <option value="1">Tek kişilik Oda</option>
+                    <option value="2">Çift kişilik Oda</option>
+                    <option value="3">Üç kişilik Oda</option>
+                    <option value="4">Suit</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="Aciklama" class="form-label">Açıklama</label>
+                <input type="text" class="form-control" id="Aciklama" name="Aciklama"  required>
+            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Rezervasyon Yap</button>
+            </div>
+            
+        </form>
+    </div>
+                `;
+
+            // Dinamik form verilerini yükle
+            const id = prompt('Güncellemek istediğiniz kullanıcının ID\'sini girin:');
+            if (id) {
+                fetch(`/Admin/GetRezDetails/${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            document.querySelector('#updateForm #MisafirAd').value = data.misafirAd;
+                            document.querySelector('#updateForm #MisafirSoyad').value = data.misafirSoyad;
+                            document.querySelector('#updateForm #Phone').value = data.phone;
+                            document.querySelector('#updateForm #Yetiskin').value = data.yetiskin;
+                            document.querySelector('#updateForm #Cocuk').value = data.cocuk;
+                            document.querySelector('#updateForm #CheckInDate').value = new Date(data.checkInDate).toISOString().split('T')[0];
+                            document.querySelector('#updateForm #CheckOutDate').value = new Date(data.checkOutDate).toISOString().split('T')[0];
+                            document.querySelector('#updateForm #RoomId').value = data.roomId;
+                            document.querySelector('#updateForm #Aciklama').value = data.aciklama;
+                        }
+                    })
+                    .catch(error => {
+                    console.error('Fetch error:', error); // Bu hatayı kontrol edin.
+                });
+            }
+        }
+         else if (page === 'rezervasyonlistele') {
+        fetch('@Url.Action("RezervasyonlarListele", "Admin")')
+            .then(response => response.json())
+            .then(data => {
+                content = `
+                    <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                        <div class="col-lg-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Rezervasyon Id</th>
+                                        <th>Giriş Tarihi</th>   
+                                        <th>Çıkış Tarihi</th>
+                                        <th>Room Id</th>
+                                        <th>User Id</th>
+                                        <th>Açıklama</th>
+                                        <th>Guest Id</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data.map(rezervasyon => `
+                                        <tr>
+                                            <td>${rezervasyon.id}</td>
+                                            <td>${rezervasyon.checkInDate}</td>
+                                            <td>${rezervasyon.checkOutDate}</td>
+                                            <td>${rezervasyon.roomId}</td>
+                                            <td>${rezervasyon.userId === 2006 ? 'Admin' : rezervasyon.userId}</td>
+                                            <td>${rezervasyon.aciklama}</td>
+                                            <td>${rezervasyon.guestId}</td>
+                                            <td>
+                                                <button onclick="editRezervasyon(${rezervasyon.id})" class="btn btn-warning btn-sm">Güncelle</button>
+                                                <button onclick="deleteRezervasyon(${rezervasyon.id})" class="btn btn-danger btn-sm">Sil</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>`;
+                document.getElementById('dynamic-content').innerHTML = content;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('dynamic-content').innerHTML = '<p>Bir hata oluştu. Lütfen tekrar deneyin.</p>';
+            });
+            
+    }
+    
+    
+        document.getElementById('dynamic-content').innerHTML = content;
+    }
+</script>
